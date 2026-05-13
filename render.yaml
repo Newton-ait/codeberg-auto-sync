@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: codeberg-auto-sync
+    runtime: python
+    repo: https://github.com/Newton-ait/codeberg-auto-sync
+    plan: free
+    envVars:
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: CODEBERG_TOKEN
+        sync: false
