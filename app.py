@@ -1,16 +1,30 @@
 from flask import Flask, jsonify
 import requests
 import os
+from datetime import datetime
 
 app = Flask(__name__)
 
-# Tokens from environment variables (SECURE!)
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 CODEBERG_TOKEN = os.environ.get("CODEBERG_TOKEN")
 
 @app.route('/')
 def home():
-    return jsonify({"status": "running", "service": "Codeberg Auto-Sync"})
+    return jsonify({
+        "status": "running",
+        "service": "Codeberg Auto-Sync",
+        "time": datetime.now().isoformat()
+    })
+
+@app.route('/health')
+def health():
+    """Health check endpoint for Uptime Robot"""
+    return jsonify({
+        "status": "healthy",
+        "service": "codeberg-auto-sync",
+        "timestamp": datetime.now().isoformat(),
+        "version": "1.0.0"
+    }), 200
 
 @app.route('/sync')
 def sync():
